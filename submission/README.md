@@ -4,6 +4,14 @@
 
 本目录按赛事提交要求整理。代码仓库本身即作品成品与可运行产品 Demo，视频、项目说明文档和路演 PPT 均提供可直接下载的正式文件。
 
+## 新版宣传片
+
+**[下载 77.5 秒正式宣传片](https://github.com/wolfgang008/life-coordinate/releases/download/promo-2026-10-04/life-coordinate-promo-final-1080p.mp4)** · [发布页与字幕、封面、校验文件](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04)
+
+[![人生坐标新版宣传片](../docs/media/life-coordinate-promo-cover.jpg)](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04)
+
+新版宣传片以 3D 人海和个人路径展现产品理念；下表的 1 分 58 秒视频提供产品流程演示。
+
 ## 提交清单
 
 | 序号 | 要求 | 提交内容 | 状态 |
