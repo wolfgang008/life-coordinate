@@ -1,3 +1,5 @@
+AI软件赛道 - 人生坐标 - 老登与小登的奇妙之旅
+
 <p align="center">
   <img src="public/favicon.svg" width="72" alt="人生坐标图标">
 </p>
@@ -9,6 +11,8 @@
 <p align="center">
   <a href="https://life.wolfx.top"><strong>立即体验</strong></a>
   ·
+  <a href="submission/README.md">参赛材料</a>
+  ·
   <a href="#快速开始">本地运行</a>
   ·
   <a href="#系统架构">系统架构</a>
@@ -17,6 +21,18 @@
 </p>
 
 ![人生坐标首页](docs/screenshots/home.jpg)
+
+## 参赛信息
+
+| 项目 | 内容 |
+| --- | --- |
+| 赛道 | AI 软件赛道 |
+| 项目名称 | 人生坐标 |
+| 队伍名称 | 老登与小登的奇妙之旅 |
+| 队长 | 房刚毅 |
+| 队员 | 李喜军 |
+| 在线 Demo | [https://life.wolfx.top](https://life.wolfx.top) |
+| 提交材料 | [参赛材料总览](submission/README.md) |
 
 ## 项目简介
 
@@ -202,7 +218,12 @@ npm run build
 
 ## 团队与分工
 
-仓库由 [@wolfgang008](https://github.com/wolfgang008) 维护。参赛成员姓名、队长与现场分工以正式报名材料为准，仓库不公开个人联系方式。
+- **队伍名称：**老登与小登的奇妙之旅
+- **队长：**房刚毅
+- **队员：**李喜军
+- **仓库维护：**[@wolfgang008](https://github.com/wolfgang008)
+
+仓库不公开个人联系方式。参赛材料中的成员信息以本页和正式报名信息为准。
 
 ---
 
