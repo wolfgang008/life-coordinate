@@ -1,0 +1,26 @@
+name = "life-coordinate"
+main = "build/worker.js"
+account_id = "c75ccff7156e7a2a6634cbdaa4de2656"
+compatibility_date = "2026-10-02"
+workers_dev = true
+
+[vars]
+PROFILE_MODEL = "gpt-5.4-mini"
+API_BASE = "https://api.openai-next.com/v1"
+PLANNER_MODEL_1 = "gpt-5.4-mini"
+PLANNER_MODEL_2 = "claude-sonnet-4-6"
+PLANNER_MODEL_3 = "deepseek-v4-flash"
+DECISION_MODEL = "gpt-5.4"
+PLANNER_FALLBACK_1 = "gpt-5.4-nano"
+PLANNER_FALLBACK_2 = ""
+PLANNER_FALLBACK_3 = "deepseek-v4-pro"
+DECISION_FALLBACKS = "deepseek-v4-pro,gpt-5.4-nano"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "life-coordinate-db"
+database_id = "c664021a-fcfd-4e8c-852d-df7361873a06"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["0 4 * * *"]

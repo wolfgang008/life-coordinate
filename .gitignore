@@ -1,0 +1,11 @@
+.local/
+.dev.vars*
+.env*
+.wrangler/
+node_modules/
+build/
+qa/live/
+qa/live-result.json
+qa/当前状态与整理记录.md
+.tmp/
+*.log

@@ -1,0 +1,26 @@
+{
+  "name": "life-coordinate",
+  "version": "5.0.0",
+  "description": "从个人处境出发，用可验证的小行动帮助年轻人探索学业与发展方向。",
+  "homepage": "https://life.wolfx.top",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && wrangler dev --port 8788",
+    "db:local": "wrangler d1 migrations apply life-coordinate-db --local",
+    "db:remote": "wrangler d1 migrations apply life-coordinate-db --remote",
+    "deploy": "npm run build && wrangler deploy",
+    "test": "node scripts/test.mjs",
+    "screenshots": "node scripts/capture-readme.mjs",
+    "verify:live": "node scripts/verify-cloudflare.mjs",
+    "preview": "npm run build && node scripts/preview.mjs"
+  },
+  "devDependencies": {
+    "miniflare": "5.20261001.0-alpha",
+    "wrangler": "4.146.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

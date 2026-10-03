@@ -1,0 +1,9 @@
+// Curated learning entrances, not admissions rules or current job opportunities.
+export const learningSources=[
+ {id:'cs50',title:'Harvard CS50 · Introduction to Computer Science',url:'https://cs50.harvard.edu/x/',fields:['计算机与信息'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'公开课程入口。用于核对计算机学习内容与练习，不支持资格或就业结论。'}]},
+ {id:'mdn',title:'MDN · Learn web development',url:'https://developer.mozilla.org/en-US/docs/Learn_web_development',fields:['计算机与信息','设计与艺术'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'网页开发学习材料入口。可用于体验页面内容、布局和交互任务，不代表职业适配。'}]},
+ {id:'psychology',title:'OpenStax · Psychology 2e',url:'https://openstax.org/details/books/psychology-2e',fields:['人文与社会','医学与生命','尚未确定'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'心理学开放教材入口。用于了解课程内容与阅读体验，不是心理测评。'}]},
+ {id:'economics',title:'OpenStax · Principles of Economics 3e',url:'https://openstax.org/details/books/principles-economics-3e',fields:['商业与管理','尚未确定'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'经济学开放教材入口。用于阅读与问题分析体验，不支持收入预测。'}]},
+ {id:'physics',title:'OpenStax · University Physics Volume 1',url:'https://openstax.org/details/books/university-physics-volume-1',fields:['科学与工程','尚未确定'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'大学物理开放教材入口。用于比较科学学习内容，不支持院校报考资格结论。'}]}
+];
+export function evidencePack(a){return learningSources.filter(s=>s.stages.includes(a.stage)&&(s.fields.includes(a.field)||a.field==='尚未确定'||!a.field)).map(s=>({...s,scope:'仅支持学习内容与体验；不支持招生、转专业、在招或薪资结论。'}));}

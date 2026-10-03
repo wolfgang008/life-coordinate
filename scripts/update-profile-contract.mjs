@@ -1,0 +1,11 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const path='src/profiling/engine.mjs';let s=await readFile(path,'utf8');
+s=s.replace("import {stageOf,composeExperience}","import {stageOf}");
+s=s.replace('只提炼具体任务偏好，不贴永久人格/职业标签。','先理解用户的学历、当前状态、城市、家庭与收入背景，再提炼具体任务偏好，不贴永久人格/职业标签。选择题回答是用户主动选择的陈述，不是已验证的经历或能力证明。没有文字经历也能基于process、experienceType和其他选择形成低置信度探索假设；禁止编造项目、成果、学校等级和工作经历。');
+s=s.replace('硬边界只能来自boundary、income、hours。','硬边界来自boundary、income、hours、support及familyBinding中明确的照护责任。mobility的希望是偏好，不自动等于不能外出；未核实收入和准备期不能当成可脱产条件。');
+s=s.replace('nextQuestion如果有，包含question、purpose、affects。','nextQuestion如果有，包含question、purpose、affects、options；options是3至5个互斥且贴合用户背景的短答案，另含“目前还不知道”，首选选择题。只在选项无法表达关键异常时才使用format:"text"微开放追问。');
+s=s.replace('个人理由必须引用真实回答ID，','个人理由必须引用真实回答ID，优先引用具体选择与已确认边界，而非只看阶段或专业名。结构化背景包括education、city、currentSituation、internship、offer、research、familyContext、familyBinding、mobility、income、runway、support、decisionStyle，必须用于比较路线与代价。不能因为没有自由文字就跳过用户的现实处境。用户选择的兴趣是偏好线索，不证明技能、能力或既有成果。');
+s=s.replace('没有亲身依据时主方向缩为低成本探索。','没有实践证据时仍可比较用户面临的专业、升学、就业或工作转向；明确哪些是待验证假设，第一行动缩为低成本验证。不能把所有用户都变成相同的“试两种任务”，也不能虚构确定机会。');
+s=s.replace('{answers:a,stageStrategy:stageOf(a.stage).focus,previous,followupBudget:', '{answers:a,answerSourceIds:Object.keys(a),inputKind:a.interviewVersion?"用户主动选择的结构化访谈":"旧版访谈与补充陈述",stageStrategy:stageOf(a.stage).focus,previous,followupBudget:');
+await writeFile(path,s);
+const api='src/profiling/api.mjs';s=await readFile(api,'utf8');s=s.replace('prompts-v5.1','prompts-v5.2-choice');s=s.replace('正在从你的经历中提取兴趣线索。','正在整理你确认的背景，寻找值得验证的兴趣线索。');await writeFile(api,s);

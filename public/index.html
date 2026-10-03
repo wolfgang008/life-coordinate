@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F5F5EF">
+  <title>人生坐标｜理解你的处境，找到下一步</title>
+  <meta name="description" content="通过个性化选择题了解你的学习、家庭、地域与现实条件，确认 AI 画像，比较适合你的方向，找到可以开始的下一步。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/pages.css">
+  <script type="module" src="/app/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="#/" aria-label="人生坐标首页"><img src="/favicon.svg" width="36" height="40" alt=""><span>人生坐标<small>从认识自己，到看清方向</small></span></a>
+    <nav aria-label="主要导航"><a href="#/" data-nav="home">探索</a><button type="button" data-command="history">我的规划</button><span id="save-status" role="status" data-state="ready">回答保存在此浏览器</span></nav>
+    <div class="header-actions"><button type="button" class="header-start" data-command="start">开始规划 <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <main id="main" tabindex="-1"><section class="empty-state"><p class="eyebrow">从高中毕业，到大学之后</p><h1>先看清处境，再找到下一步。</h1><p>正在准备你的探索空间。</p></section></main>
+  <footer class="site-footer"><div><strong>人生坐标</strong><p>下一步，从更了解自己开始。</p></div><div class="footer-links"><button type="button" data-command="method">建议如何形成</button><button type="button" data-command="privacy">资料如何使用</button><button type="button" data-command="settings">资料与设置</button></div><small class="footer-note">面向高中毕业到毕业初期的你。建议帮助你比较与探索；具体申请资格、机会和费用，请以官方信息为准。</small></footer>
+  <dialog id="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title"></h2><button type="button" class="icon-button" aria-label="关闭" data-close-dialog>×</button></div><div id="dialog-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript 以使用访谈和路线探索。</p></noscript>
+</body>
+</html>
+

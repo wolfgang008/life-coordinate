@@ -1,0 +1,235 @@
+{
+  "url": "https://life.wolfx.top",
+  "checkedAt": "2026-10-03T08:28:37.905Z",
+  "mode": "read-only",
+  "checks": [
+    {
+      "name": "AI configuration and D1 binding",
+      "passed": true
+    },
+    {
+      "name": "Homepage matches current build",
+      "passed": true
+    },
+    {
+      "name": "All recursive static assets match",
+      "count": 32,
+      "passed": true
+    }
+  ],
+  "config": {
+    "ready": true,
+    "database": true,
+    "providers": [
+      {
+        "provider": "gpt",
+        "name": "GPT"
+      },
+      {
+        "provider": "claude",
+        "name": "Claude"
+      },
+      {
+        "provider": "deepseek",
+        "name": "DeepSeek"
+      }
+    ],
+    "apiHost": "api.openai-next.com",
+    "version": 5
+  },
+  "assets": [
+    {
+      "path": "app/main.js",
+      "sha256": "e75840270d4943e6f7cd9a797a36630835f44566fc7746f2e496e198c19bd774",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "app/requests.js",
+      "sha256": "e6ce2a9d736b57842ade22687a610d66d6c2df64797b868b1d8a83b2ac290997",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "app/state.js",
+      "sha256": "129345fb7f6797e7f1e70b8e8656bd3c74a3f3addd133e3b982dcf141a93dd4b",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "atlas.css",
+      "sha256": "a9727b2b3df78293d769591272503cce81b127e39c75d49c835c5896c158a435",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "components/ui.js",
+      "sha256": "b7c354a288e73420aebb3660f4ce376fa7bd6d01c6da8ac7a7807eec227acf81",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "content/senior-example.json",
+      "sha256": "93a5e74e67ccea458942518d19c8d9620a59896176958765ff3d55efd89b12d5",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "core.js",
+      "sha256": "46030b47ab0037e5c5c431cd2d115beb6a737e1e10a2b808a9ac3d66bce83db6",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "dawn.css",
+      "sha256": "22b1a1a61176594a5deffb2a9ab917b5fa9bf6c851dcbef7dfd1b78c28bc453b",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/contracts.js",
+      "sha256": "77c48396b200bfc4bf91554d711f3ab615f16eab265f0134fc522bbd5d3d500d",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/rules.js",
+      "sha256": "035272c74be79a0ee7dff61dd2336abb76394df7b762a5499fc046ab59b03d48",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/stages.js",
+      "sha256": "b25f00709c7f8d37c68f4fce0e0f694f3e8e6490d4eeab4c322e89bc7849393d",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "evidence.js",
+      "sha256": "d5686da70004cd2552f68a347ed2c0a51b1c07a303c643ca1b73170648929c34",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "experience.js",
+      "sha256": "20cd31ec8b14732ffd57810d9e3f160cd285194c516a7498c7587700f9aa4113",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "5ba559c41b743ba1edd17a485a5f964c892504fcbd39314f5b19f7f13675b342",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "focus.css",
+      "sha256": "7af0efe519ade5d0abbe7622062a477c28d5a8e985531a8f41f7a9ec203083c5",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "home.js",
+      "sha256": "6eb815382015a7395f15d5aa2a10fba31a708ba6968e6166fb8a68c4f35f7329",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "index.html",
+      "sha256": "f8bd6938bc39fea658e6c80c7da701854d724cb57a546567ebe73a61556e91d5",
+      "etagChecked": false,
+      "passed": true
+    },
+    {
+      "path": "main.js",
+      "sha256": "820fa1b4cf5dbc23d2623272cfc72371d8e6230f5c32a8d2031a3a153dfa465a",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "planning.js",
+      "sha256": "d9405f9c878c33de71188dd3fa99520d3953f513f964f7e8f0df60c95b857657",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "polish.css",
+      "sha256": "bcbc5dc4679c7f63fb2c12d085ecc4f4dbec2ce458b1936cba29fa1ce9942762",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "storage.js",
+      "sha256": "3b25cc7fe8e66a4d9b3491e2e851538ebb2dfe7579287aa21b51610d6d2a3b70",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles.css",
+      "sha256": "3269d25e011393dd3e18be8a8a9a226d69925b0c9cdf4b059114f81fdc4344a0",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/base.css",
+      "sha256": "f0e9dee3341c38b60c1163f35426ed928f056e0fe353251a8481b818fc6d81df",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/pages.css",
+      "sha256": "d45beb0245b586c3e6dd3d299389c96a69e42179c3bead46e0111a23a54c26e9",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/tokens.css",
+      "sha256": "bddce87a6e3ffa7c02641261c52d87290d05c773f28d993543897aab4853119c",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "sync.js",
+      "sha256": "57b757b73ede5e62d7499558146a88941152fa9b7232ef20fb130d49b22fc1e2",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/action.js",
+      "sha256": "9af1f5dfb30c2338d2ea409e4402c39fbb4ca7c03639d56d81a61e14292c7756",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/analysis.js",
+      "sha256": "492672eaf0e0f0adfae499dcc2778770da51c15040c3d2d0b66e923dbea8913b",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/home.js",
+      "sha256": "1cc7d5dc1a4e5003ed31150093cf5ffa61691fb4cd2aaff09dafd61e42f3bf66",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/interview.js",
+      "sha256": "a90045b3df726179829572beed3449781457d366207e968296add23da4ddece1",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/profile.js",
+      "sha256": "22235128e50e97891cbc88d1c52424b0e9f1aa0f0764ad26cfdb62a865336ae4",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/result.js",
+      "sha256": "5b3ad2a9d996f8b5c9ce9f4ba46dc0c25acf43df0584c9509e06ad3b93084765",
+      "etagChecked": true,
+      "passed": true
+    }
+  ],
+  "passed": true
+}
