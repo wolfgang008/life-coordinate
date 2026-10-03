@@ -3,6 +3,10 @@
   "version": "5.0.0",
   "description": "从个人处境出发，用可验证的小行动帮助年轻人探索学业与发展方向。",
   "homepage": "https://life.wolfx.top",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wolfgang008/life-coordinate.git"
+  },
   "type": "module",
   "private": true,
   "scripts": {
