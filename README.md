@@ -28,8 +28,6 @@ AI软件赛道 - 人生坐标 - 老登与小登的奇妙之旅
 
 **[下载 1080p 正式成片](https://github.com/wolfgang008/life-coordinate/releases/download/promo-2026-10-04/life-coordinate-promo-final-1080p.mp4)** · [完整发布与附件](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04) · [影片说明](docs/promotional-film.md)
 
-77.5 秒 · 1920 × 1080 · 豆包女声 · 原创配乐 · 中文字幕
-
 ![人生坐标首页](docs/screenshots/home.jpg)
 
 ## 参赛信息
