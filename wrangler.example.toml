@@ -1,0 +1,21 @@
+# Copy to wrangler.toml. Replace resource IDs before deploying your own instance.
+name = "life-coordinate"
+main = "build/worker.js"
+compatibility_date = "2026-10-02"
+workers_dev = true
+
+[vars]
+PROFILE_MODEL = "deepseek-flash"
+API_BASE = "https://api.deepseek.com"
+PLANNER_MODEL_1 = "deepseek-flash"
+PLANNER_MODEL_2 = "deepseek-v4-pro"
+DECISION_MODEL = "deepseek-v4-pro"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "life-coordinate-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["0 4 * * *"]

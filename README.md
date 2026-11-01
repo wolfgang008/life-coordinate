@@ -1,238 +1,190 @@
-AI软件赛道 - 人生坐标 - 老登与小登的奇妙之旅
-
 <p align="center">
-  <img src="public/favicon.svg" width="72" alt="人生坐标图标">
+  <a href="https://life.wolfx.top"><img src="public/favicon.svg" width="76" alt="人生坐标"></a>
 </p>
 
-<h1 align="center">人生坐标</h1>
+<h1 align="center">人生坐标 · Life Coordinate</h1>
 
-<p align="center">不用一道测试定义你，而是从真实处境出发，找到一个可以验证的下一步。</p>
+<p align="center"><strong>下一步怎么选？先从了解你开始。</strong></p>
+<p align="center">用个性化选择题梳理背景、经历与现实条件，<br>再由 AI 比较选择，找到现在能做的下一步。</p>
 
 <p align="center">
-  <a href="https://life.wolfx.top"><strong>立即体验</strong></a>
-  ·
-  <a href="#宣传片">宣传片</a>
-  ·
-  <a href="submission/README.md">参赛材料</a>
-  ·
-  <a href="#快速开始">本地运行</a>
-  ·
-  <a href="#系统架构">系统架构</a>
-  ·
-  <a href="#测试与可靠性">测试结果</a>
+  <a href="https://life.wolfx.top"><strong>在线体验 ↗</strong></a> ·
+  <a href="#从一个真实困惑开始">看看案例</a> ·
+  <a href="#快速开始">本地运行</a> ·
+  <a href="#系统如何工作">系统架构</a> ·
+  <a href="https://github.com/wolfgang008/life-coordinate/issues">反馈问题</a>
 </p>
 
-## 宣传片
+<p align="center">
+  <a href="https://github.com/wolfgang008/life-coordinate/actions/workflows/ci.yml"><img src="https://github.com/wolfgang008/life-coordinate/actions/workflows/ci.yml/badge.svg" alt="CI 检查状态"></a>
+  <img src="https://img.shields.io/badge/AI-DeepSeek-4D6BFE?style=flat" alt="AI：DeepSeek">
+  <img src="https://img.shields.io/badge/Runtime-Cloudflare_Workers-F38020?style=flat&logo=cloudflare&logoColor=white" alt="Cloudflare Workers">
+  <img src="https://img.shields.io/badge/Node.js-%E2%89%A522.13-365844?style=flat&logo=node.js&logoColor=white" alt="Node.js 22.13 或更高版本">
+</p>
 
-[![人生坐标宣传片封面](docs/media/life-coordinate-promo-cover.jpg)](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04)
+[![人生坐标当前线上首页](docs/screenshots/home-current.png)](https://life.wolfx.top)
 
-**[下载 1080p 正式成片](https://github.com/wolfgang008/life-coordinate/releases/download/promo-2026-10-04/life-coordinate-promo-final-1080p.mp4)** · [完整发布与附件](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04) · [影片说明](docs/promotional-film.md)
+<p align="center"><sub>真实产品截图 · 2026-11-01 线上版本 · 无需注册即可开始</sub></p>
 
-![人生坐标首页](docs/screenshots/home.jpg)
+## 先了解你，建议才有依据
 
-## 参赛信息
+选专业、安排大学生活、准备实习、探索职业方向——很多时候，困难在于还没理清自己的处境，也不知道应该向 AI 提供哪些信息。
 
-| 项目 | 内容 |
+**人生坐标把这一步做成了有引导的选择题。** 先了解你所处的阶段、正在纠结的事与已有经历，再根据回答生成个性化追问。你核对自己的情况，补充遗漏，最后得到结合时间、资源和现实限制的建议。
+
+| 你需要的帮助 | 人生坐标怎么做 |
 | --- | --- |
-| 赛道 | AI 软件赛道 |
-| 项目名称 | 人生坐标 |
-| 队伍名称 | 老登与小登的奇妙之旅 |
-| 队长 | 房刚毅 |
-| 队员 | 李喜军 |
-| 在线 Demo | [https://life.wolfx.top](https://life.wolfx.top) |
-| 提交材料 | [参赛材料总览](submission/README.md) |
+| 不知道从哪里说起 | 从基本情况选择题开始，不用先写长篇自我介绍 |
+| 希望问题和自己有关 | AI 根据前面的回答继续出题，了解具体经历与投入偏好 |
+| 有实际限制需要考虑 | 把可投入时间、费用或收入压力、不能接受的事纳入分析 |
+| 想知道下一步做什么 | 比较方向、代价和调整条件，给出可以实际完成的小行动 |
+| 试过之后情况变了 | 保留记录，用行动反馈更新下一版建议 |
 
-## 项目简介
+## 从一个真实困惑开始
 
-人生坐标面向高中毕业到大学毕业初期的年轻人，解决「了解不少方向，却不知道哪一条真的适合当下的自己」这个问题。
+> 我是一名计算机专业的大二学生，会一点 Python，也参加过比赛。最近不知道该继续刷算法题，还是做项目、准备实习。什么都重要，可时间不够，我该先做什么？
 
-传统职业测评往往停在性格标签和职业名称，真正的选择却还受学业基础、家庭支持、所在城市、收入压力和可投入时间影响。本项目把这些现实条件纳入同一次分析，先让用户确认 AI 的理解，再比较方向，最后用一件小事收集真实反馈。
+同样是计算机学生，参加比赛时最投入的部分也可能不同：有人喜欢想出解法，有人喜欢把功能做出来，有人擅长和队友推进事情。
 
-| 项目 | 说明 |
-| --- | --- |
-| 行业与场景 | 教育与生涯规划，聚焦升学、专业探索和毕业去向决策 |
-| 核心用户 | 高中毕业生、大学生与毕业初期用户 |
-| 核心价值 | 把「建议」变成可纠正、可追溯、可执行、可复评的探索闭环 |
-| 当前形态 | 可运行 Web MVP，含真实 AI 画像、多模型方向规划与行动反馈 |
+人生坐标先通过选择题了解这些差别，再结合当前基础和可投入时间比较选择。首页的 **「用这个案例体验选择题」** 会进入实际流程，经过背景选择、AI 追问、核对补充和分析。案例只预填虚构背景，时间与现实边界仍由体验者选择。
 
-## 产品闭环
+**首页展示的追问明确标为示意；进入流程后的个性化问题由 AI 实际生成。**
 
-1. **确认处境**：用结构化选择题了解阶段、学习、实践、家庭、地域、收入与时间边界，文字经历仅作可选补充。
-2. **形成画像**：AI 把回答整理为事实、兴趣假设、能力线索、现实边界和关键未知。
-3. **用户确认**：每条兴趣线索都可接受、拒绝或纠正；没有经用户确认的推测，不会直接限制后续建议。
-4. **独立规划**：三个模型基于同一份已确认画像分别提出完整路径，避免第一个结论影响后续判断。
-5. **综合决策**：决策模型在可行性、时间、风险和个人证据之间做取舍，输出主推方向、保留可能与条件路线。
-6. **行动验证**：给出一个当周可完成的小任务，记录「想继续的部分」「卡住的地方」与「是否愿意再做一次」，再更新下一版建议。
+## 一次探索，怎样走完
+
+| 步骤 | 你会做什么 | 得到什么 |
+| :---: | --- | --- |
+| **01** | 选择阶段、困扰、领域与当前状况 | 一份基本背景 |
+| **02** | 回答 AI 根据背景生成的个性化选择题 | 更具体的经历和偏好线索 |
+| **03** | 选择现实边界、可用支持与投入时间 | 建议必须考虑的条件 |
+| **04** | 核对摘要；按需补充背景选择题或一句文字 | 由你核对的信息基础，补充均可跳过 |
+| **05** | 确认生成建议，比较不同方向 | 取舍理由、风险、下一步行动与调整条件 |
+| **06** | 完成一次尝试，记录感受与结果 | 用真实反馈更新建议，保留旧版本 |
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/screenshots/profile.jpg" alt="AI 画像确认界面"></td>
-    <td width="50%"><img src="docs/screenshots/result.jpg" alt="方向比较界面"></td>
+    <td width="69%" valign="top"><img src="docs/screenshots/interview-current.png" alt="桌面端选择题：选项与下一题同时可见"></td>
+    <td width="31%" valign="top"><img src="docs/screenshots/interview-mobile-current.png" alt="手机端选择题：一屏选答，操作区持续可见"></td>
   </tr>
   <tr>
-    <td align="center"><sub>画像先确认，不把模型推测当成用户事实</sub></td>
-    <td align="center"><sub>方向、代价、条件和第一行动放在同一个决策界面</sub></td>
+    <td align="center"><sub>一题一屏，下一题始终可见</sub></td>
+    <td align="center"><sub>手机上也能顺畅选答</sub></td>
   </tr>
 </table>
 
-## 核心功能与代码位置
+常规题在一屏内完成；遇到长内容或矮屏时，只滚动中间的题目区域，底部操作区保持可见。补充背景同样逐题展示，换题后回到内容顶部。
 
-| 功能 | 已实现内容 | 主要文件 |
-| --- | --- | --- |
-| 分阶段访谈 | 五个人生阶段、动态追问、选项有效性与回答迁移 | `public/domain/stages.js` `public/views/interview.js` |
-| 个人画像 | 事实与假设分离、来源追溯、兴趣确认、边界核对和动态追问 | `src/profiling/engine.mjs` `public/views/profile.js` |
-| 多模型规划 | 三个独立规划模型并行分析，至少两份有效结果才进入综合 | `src/ai.mjs` `src/profiling/api.mjs` |
-| 个人地形册 | 主推、备选与条件路线比较，支持单条件变化预览 | `public/views/result.js` `public/domain/contracts.js` |
-| 第一行动 | 将抽象方向拆成可完成、可检查、可复盘的小任务 | `public/views/action.js` |
-| 版本与会话安全 | 匿名会话隔离、乐观锁、请求去重、过期清理与迟到结果保护 | `src/db.mjs` `src/worker.mjs` `migrations/` |
-
-## 系统架构
+## 系统如何工作
 
 ```mermaid
-flowchart LR
-    U[用户] --> W[结构化访谈]
-    W --> API[Worker API]
-    API --> P[画像引擎]
-    P --> C[用户确认与纠正]
-    C --> M1[GPT 独立规划]
-    C --> M2[Claude 独立规划]
-    C --> M3[DeepSeek 独立规划]
-    M1 --> D[综合决策]
-    M2 --> D
-    M3 --> D
-    E[已核验学习资料] --> D
-    D --> R[方向比较与第一行动]
-    R --> F[实践反馈]
-    F --> P
-    API <--> DB[(D1 版本与任务状态)]
+flowchart TD
+    A[基本情况选择题] --> B[DeepSeek Flash 生成个性化追问]
+    B --> C[现实条件选择 · 核对与按需补充]
+    C --> D[Flash 整理个人情况]
+    D --> E[Flash 独立规划]
+    D --> F[Pro 独立规划]
+    E --> G[Pro 综合比较与取舍]
+    F --> G
+    G --> H[方向建议 · 第一行动]
+    H --> I[实践反馈与版本记录]
+    I --> D
 ```
 
-前端使用原生 HTML、CSS 和 ES Modules，无前端框架运行时。后端由 Worker 提供静态资源、API、NDJSON 进度流和 D1 数据访问。模型输出在进入业务流程前必须通过结构、来源、时间预算与现实边界校验。
+所有模型请求由后端发送至 **DeepSeek 官方 API**。两次独立规划使用同一份个人情况，形成完整方案后，再由 Pro 发起新请求进行综合比较。
 
-## Agent 工作流
-
-```mermaid
-sequenceDiagram
-    participant U as 用户
-    participant P as 画像 Agent
-    participant A as 规划 Agent 组
-    participant D as 决策 Agent
-    participant S as 状态与证据层
-    U->>P: 提交结构化回答
-    P->>S: 核对回答来源与版本
-    P-->>U: 输出可逐项确认的画像
-    U->>P: 接受、拒绝或纠正线索
-    P->>A: 传递已确认画像与现实边界
-    par 三个模型独立判断
-        A->>A: GPT 提出完整路径
-        A->>A: Claude 提出完整路径
-        A->>A: DeepSeek 提出完整路径
-    end
-    A->>D: 提交通过校验的独立方案
-    D->>S: 核对条件、证据与时间预算
-    D-->>U: 返回方向、风险与第一行动
-    U->>P: 提交行动后的真实反馈
-```
-
-## 大模型使用说明
-
-所有模型请求都由后端发起，前端不持有密钥。系统通过 OpenAI 兼容的 `POST /v1/chat/completions` 接口调用模型，关闭自动跳转，并对请求时间、响应体积和 JSON 结构设置上限。
-
-| 阶段 | 主模型 | 职责 |
+| 环节 | 后端模型标识 | 职责 |
 | --- | --- | --- |
-| 个人画像 | `gpt-5.4-mini` | 整理事实、兴趣假设、能力线索、边界与关键未知 |
-| 独立规划 A | `gpt-5.4-mini` | 基于已确认画像提出完整路径；失败时使用 `gpt-5.4-nano` |
-| 独立规划 B | `claude-sonnet-4-6` | 从另一模型视角独立评估可行性与风险 |
-| 独立规划 C | `deepseek-v4-flash` | 提供第三份独立方案；失败时使用 `deepseek-v4-pro` |
-| 综合决策 | `gpt-5.4` | 比较独立方案并形成最终方向；支持 DeepSeek 与 GPT 备用序列 |
+| 个性化出题、背景理解、反馈更新 | `deepseek-flash` | 整理已知信息与需要了解的差别 |
+| 两份独立规划 | `deepseek-flash` + `deepseek-v4-pro` | 分别提出方向、条件、风险与行动 |
+| 综合建议 | `deepseek-v4-pro` | 比较完整方案，给出取舍与可执行的下一步 |
 
-这不是把多个模型的简短意见拼接在一起。每个独立模型必须先产出包含理由、风险、条件和行动的完整方案；有效方案少于两份时，系统会明确终止，不会用本地规则伪造 AI 结果。
+模型返回内容会经过结构、来源、时间预算和现实边界校验。未被用户确认的推测会保留不确定性；调用失败会明确提示并保留回答，不用静态案例冒充实时结果。
 
-## 商业场景与验证计划
-
-当前 MVP 先验证个人用户是否愿意完成「访谈—确认—行动—反馈」闭环。在机构端，学校生涯教育与就业指导部门、升学规划服务团队可作为潜在使用方，但付费方式和价格仍需通过试点验证，本项目不虚构收入数据。
-
-下一阶段会重点记录三类可量化结果：首次背景整理所需时间、用户完成第一行动的比例，以及行动反馈后继续使用的比例。这些数据将用来判断它是否能降低一对一初访的重复工作，并提高规划后的实际行动率。
+前端使用原生 **HTML / CSS / ES Modules**；**Cloudflare Worker** 提供页面、API 和 NDJSON 进度流；**D1** 保存临时会话与任务状态。
 
 ## 快速开始
 
-### 环境要求
+需要 **Node.js 22.13+**、npm，以及自己的 DeepSeek 官方 API 密钥。
 
-- Node.js 22.13 或更高版本
-- npm
-- 运行真实 AI 分析时，需要可用的 OpenAI 兼容 API 密钥
-
-### 安装与运行
-
-```powershell
-npm install
-npm run db:local
-npm run dev
+```bash
+git clone https://github.com/wolfgang008/life-coordinate.git
+cd life-coordinate
+npm ci
+npm run build
 ```
 
-打开 `http://127.0.0.1:8788`。不配置模型密钥也可浏览首页和「完整案例」，案例会明确标记为示例人物。
+独立本地预览无需 Cloudflare 账号。真实 AI 模式支持环境变量 `API_KEY`，也可在忽略目录 `.local/` 中创建 `deepseek.json`：
 
-需要运行真实分析时，在项目根目录创建不纳入 Git 的 `.dev.vars`：
-
-```dotenv
-API_BASE="https://your-openai-compatible-endpoint.example/v1"
-API_KEY="your-private-api-key"
+```json
+{
+  "apiBase": "https://api.deepseek.com",
+  "apiKey": "YOUR_DEEPSEEK_API_KEY"
+}
 ```
 
-密钥只会由后端使用。`.dev.vars`、`.local/`、`.wrangler/` 和本地数据库均已被忽略。
-
-## 测试与可靠性
-
 ```powershell
+# Windows PowerShell
+$env:ENABLE_LIVE_AI="1"
+node scripts/preview.mjs
+```
+
+```bash
+# macOS / Linux
+ENABLE_LIVE_AI=1 node scripts/preview.mjs
+```
+
+打开 **http://127.0.0.1:8788**。本地数据库会自动初始化。若只想浏览界面，可省略 `ENABLE_LIVE_AI`；真实 AI 分析仍需配置密钥。
+
+使用 Wrangler 开发、设置 `.dev.vars` 和独立部署，见 [开发与部署指南](docs/development.md)。
+
+## 验证与可靠性
+
+```bash
 npm test
 npm run build
 ```
 
-当前回归测试为 **56 / 56 通过**，GitHub Actions 会在推送和拉取请求中执行全新依赖安装、测试与构建。
+**本次发布前：122 项检查通过，28 项静态资源构建成功。** CI 会在推送和拉取请求中重新安装依赖、运行测试并构建；上方状态徽章显示最近的实际结果。
 
-测试覆盖：
+- **业务流程**：五个阶段、动态追问、可选补充、资料核对、建议与行动反馈。
+- **建议约束**：时间预算、收入要求、家庭责任与其他现实边界。
+- **异常恢复**：模型超时、无效返回、失败重试、取消、旧记录与迟到结果保护。
+- **状态安全**：匿名会话隔离、重复请求防护、多标签页冲突与本地保存。
+- **浏览器实测**：桌面与手机尺寸下的首页、选答和操作区；长内容与矮屏的滚动边界。
 
-- 五个人生阶段、动态题与无文字经历场景；
-- 画像、追问、方向、情景预览和行动数据协议；
-- 地域、收入、实习、家庭责任和时间预算等硬边界；
-- 多模型超时、结构修正、备用模型与部分失败降级；
-- D1 会话隔离、请求锁、重复请求、过期清理与云端写入失败；
-- 旧版本数据迁移、多标签页冲突和超量本地缓存。
+DeepSeek 真实联调与自动测试分别记录。此次上线后的核验逐文件比对了正式域名的全部 28 项静态资源，并检查 AI 配置与 D1 绑定；配置就绪不代表这次额外跑过生产环境付费分析。
 
-测试不调用真实用户数据，也不会把规则预览冒充为真实 AI 分析。
+[本次发布记录](qa/线上部署_2026-11-01.md) · [线上资源核验](qa/cloudflare-deploy-20261101.json) · [答题与滚动实测](qa/答题滚动修复_2026-11-01.md) · [选择题流程验收](qa/选择题主流程调整_2026-11-01.md)
 
 ## 数据与隐私
 
-- 回答、规划和行动笔记默认保存在用户浏览器。
-- 只有在用户明确同意后，当次资料才会发往模型服务。
-- 页面会提醒用户不要填写姓名、联系方式、详细住址和资产信息。
-- 服务端状态用于保持版本一致、隔离匿名会话并防止重复请求，过期数据由定时任务清理。
+回答、建议和行动笔记保存在当前浏览器，可以导出。用户同意后，当次回答才会发给 DeepSeek；后端临时保存约 24 小时，用于会话与任务恢复。换设备不会自动同步本地记录。
 
-## 项目结构
+密钥仅由后端持有，不进入前端代码、截图或仓库。`.dev.vars`、`.local/`、`.wrangler/` 和本地数据库均不纳入 Git。请勿在回答中填写姓名、电话或详细住址。
 
-```text
-.
-├── public/                 前端页面、视图、样式、领域规则与示例内容
-├── src/                    Worker 入口、数据访问、画像引擎与多模型编排
-├── migrations/             D1 数据库迁移
-├── content/                可纳入规划的学习资料包
-├── scripts/                构建、测试、预览、截图与验收工具
-├── docs/screenshots/       README 使用的真实产品截图
-├── qa/                     验收记录与可重现检查结果
-├── .github/workflows/      持续集成配置
-├── package.json            项目命令与依赖
-└── wrangler.toml           Worker、模型与 D1 运行配置
-```
+## 项目导航
 
-## 团队与分工
+| 目录 | 内容 |
+| --- | --- |
+| [`public/app/`](public/app/) · [`public/views/`](public/views/) | 页面交互、状态与各步骤视图 |
+| [`public/domain/`](public/domain/) · [`public/styles/`](public/styles/) | 动态题、校验规则与响应式样式 |
+| [`src/profiling/`](src/profiling/) · [`src/ai.mjs`](src/ai.mjs) | 个性化出题、背景理解与 DeepSeek 编排 |
+| [`src/worker.mjs`](src/worker.mjs) · [`migrations/`](migrations/) | API、会话与数据库结构 |
+| [`scripts/`](scripts/) · [`qa/`](qa/) | 构建、测试、预览与验收证据 |
+| [`docs/development.md`](docs/development.md) | 本地开发、私密配置与独立部署 |
 
-- **队伍名称：**老登与小登的奇妙之旅
-- **队长：**房刚毅
-- **队员：**李喜军
-- **仓库维护：**[@wolfgang008](https://github.com/wolfgang008)
+<details>
+<summary><strong>团队与历史材料</strong></summary>
 
-仓库不公开个人联系方式。参赛材料中的成员信息以本页和正式报名信息为准。
+AI 软件赛道 · **老登与小登的奇妙之旅**<br>
+队长：房刚毅 · 队员：李喜军 · 仓库维护：[@wolfgang008](https://github.com/wolfgang008)
+
+[历史参赛材料](submission/README.md) · [宣传片与附件](https://github.com/wolfgang008/life-coordinate/releases/tag/promo-2026-10-04)
+
+历史材料记录当时版本，当前产品流程和模型方案以本文及现行源码为准。
+
+</details>
 
 ---
 
-<p align="center"><sub>方向不是一次算出来的。它是在一次次真实体验中慢慢变清楚的。</sub></p>
+<p align="center"><strong>先选几道题，让下一步更清楚。</strong><br><br><a href="https://life.wolfx.top">开始探索 ↗</a></p>

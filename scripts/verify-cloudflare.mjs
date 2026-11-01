@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 
 // Read-only production verification: no sessions, model calls or user records.
 const base = (process.env.DEPLOY_URL || 'https://life.wolfx.top').replace(/\/+$/, '');
+const reportName = process.env.DEPLOY_REPORT || 'cloudflare-deploy-' + new Date().toISOString().slice(0, 10).replaceAll('-', '') + '.json';
+assert.match(reportName, /^[a-z0-9-]+\.json$/);
 const report = {url: base, checkedAt: new Date().toISOString(), mode: 'read-only', checks: []};
 const root = new URL('../public/', import.meta.url);
 function withoutCloudflareInjection(value) {
@@ -40,7 +42,10 @@ try {
   assert.equal(config.version, 5);
   assert.equal(config.ready, true);
   assert.equal(config.database, true);
-  assert.equal(config.providers.length, 3);
+  assert.equal(config.configurationValid, true);
+  assert.equal(config.apiHost, 'api.deepseek.com');
+  assert.equal(config.modelCount, 2);
+  assert.deepEqual(config.providers.map(p => p.provider), ['flash', 'pro']);
   report.config = config;
   report.checks.push({name: 'AI configuration and D1 binding', passed: true});
   const home = await request('/');
@@ -69,6 +74,6 @@ try {
   report.error = error.message;
   process.exitCode = 1;
 } finally {
-  await writeFile(new URL('../qa/cloudflare-deploy-20261003.json', import.meta.url), JSON.stringify(report, null, 2) + '\n');
+  await writeFile(new URL('../qa/' + reportName, import.meta.url), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report.passed ? {passed: true, url: base, config: report.config, assetCount: report.assets.length} : {passed: false, error: report.error}, null, 2));
 }

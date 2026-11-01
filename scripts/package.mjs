@@ -5,9 +5,9 @@ const root=new URL('../',import.meta.url),delivery=new URL('../交付包_人生�
 const copy=async(from,to)=>{await mkdir(new URL('.',to),{recursive:true});await copyFile(from,to);};
 for(const dir of ['public','src','migrations']){await mkdir(new URL(dir+'/',delivery),{recursive:true});for(const name of await readdir(new URL(dir+'/',root)))await copy(new URL(dir+'/'+name,root),new URL(dir+'/'+name,delivery));}
 for(const name of ['package.json','wrangler.toml','.gitignore','README.md','deploy.cmd','test.cmd','start-local.cmd','start-ai.cmd'])await copy(new URL(name,root),new URL(name,delivery));
-await copy(new URL('../人生坐标_最终重构执行方案.md',root),new URL('文档/最终重构执行方案.md',delivery));
+await copy(new URL('../docs/历史方案/产品重构方案_2026-10-03.md',root),new URL('文档/最终重构执行方案.md',delivery));
 await copy(new URL('../docs/原始产品规划.md',root),new URL('文档/原始产品规划.md',delivery));
-const deliveryReadme=(await readFile(new URL('README.md',root),'utf8')).replace('../人生坐标_最终重构执行方案.md','文档/最终重构执行方案.md').replace(/历史材料已集中到\[恢复归档\]\([^\n]+/,'历史材料位于原工作区 archive 目录，内含源码恢复位置与校验清单；此交付包不携带历史归档。旧部署说明和检查结果只适用于历史版本。');
+const deliveryReadme=(await readFile(new URL('README.md',root),'utf8')).replace('../docs/历史方案/产品重构方案_2026-10-03.md','文档/最终重构执行方案.md').replace(/历史材料已集中到\[恢复归档\]\([^\n]+/,'历史材料位于原工作区 archive 目录，内含源码恢复位置与校验清单；此交付包不携带历史归档。旧部署说明和检查结果只适用于历史版本。');
 await writeFile(new URL('README.md',delivery),deliveryReadme);
 await mkdir(new URL('build/',delivery),{recursive:true});await copy(new URL('build/worker.js',root),new URL('build/worker.js',delivery));await copy(new URL('build/worker.js',root),new URL('worker.js',delivery));
 await mkdir(new URL('scripts/',delivery),{recursive:true});for(const name of ['build.mjs','server.test.mjs','regression.test.mjs','test.mjs','preview.mjs','prepare-ai.mjs'])await copy(new URL('scripts/'+name,root),new URL('scripts/'+name,delivery));

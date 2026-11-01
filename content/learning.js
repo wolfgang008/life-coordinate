@@ -6,4 +6,4 @@ export const learningSources=[
  {id:'economics',title:'OpenStax · Principles of Economics 3e',url:'https://openstax.org/details/books/principles-economics-3e',fields:['商业与管理','尚未确定'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'经济学开放教材入口。用于阅读与问题分析体验，不支持收入预测。'}]},
  {id:'physics',title:'OpenStax · University Physics Volume 1',url:'https://openstax.org/details/books/university-physics-volume-1',fields:['科学与工程','尚未确定'],stages:['school','early','junior','senior','graduate'],status:'pending',checked:null,excerpts:[{id:'overview',text:'大学物理开放教材入口。用于比较科学学习内容，不支持院校报考资格结论。'}]}
 ];
-export function evidencePack(a){return learningSources.filter(s=>s.stages.includes(a.stage)&&(s.fields.includes(a.field)||a.field==='尚未确定'||!a.field)).map(s=>({...s,scope:'仅支持学习内容与体验；不支持招生、转专业、在招或薪资结论。'}));}
+export function evidencePack(a){return learningSources.filter(s=>s.stages.includes(a.stage)&&((Array.isArray(a.field)?a.field:[a.field]).some(f=>s.fields.includes(f))||(Array.isArray(a.field)?a.field.includes('尚未确定'):a.field==='尚未确定')||!a.field)).map(s=>({...s,scope:'仅支持学习内容与体验；不支持招生、转专业、在招或薪资结论。'}));}

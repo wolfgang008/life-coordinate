@@ -1,6 +1,6 @@
 export const stages = [
   {id:'school',title:'高中毕业',subtitle:'从好奇出发，认识专业',concerns:['专业如何选择','还不知道喜欢什么','大学里想尝试什么'],focus:'先确认你的学习环境、家庭支持和愿意尝试的任务，再比较专业方向。'},
-  {id:'early',title:'大一 / 大二',subtitle:'在体验中，找到热爱',concerns:['专业是否适合我','想探索新的方向','课程与兴趣有些脱节'],focus:'分清基础困难与真实兴趣，比较课程、项目和实践体验。'},
+  {id:'early',title:'大一 / 大二',subtitle:'在体验中，找到热爱',concerns:['刷题、项目和实习怎么安排','专业是否适合我','想探索新的方向','课程与兴趣有些脱节'],focus:'分清基础困难与真实兴趣，比较课程、项目和实践体验。'},
   {id:'junior',title:'大三',subtitle:'让学习连接更多可能',concerns:['深造还是专业实践','怎样积累实践证据','想跨方向但不确定'],focus:'把课程、项目、研究和现实准备窗口放在一起比较。'},
   {id:'senior',title:'大四 / 应届',subtitle:'在取舍中，看清下一步',concerns:['升学与就业如何取舍','缺少实践，不知怎么开始','个人意愿与家庭期待不同'],focus:'先核对毕业、收入、地域与家庭边界，再比较学习和发展方向。'},
   {id:'graduate',title:'已毕业 / 毕业初期',subtitle:'带着经历，重新出发',concerns:['想转向新的领域','工作与兴趣有距离','怎样兼顾收入和学习'],focus:'以可承担的成本验证转向，保留生活与收入边界。'}
@@ -23,10 +23,10 @@ export function interviewQuestions(a,deep=false){
     q('city',0,'你现在主要在哪座城市学习或生活？','用于理解地域和机会背景，不需要学校名称或详细地址。',['西安','成都','北京 / 上海 / 广州 / 深圳','杭州 / 南京 / 武汉 / 重庆','其他省会或区域中心城市','其他地级市 / 县城 / 乡镇','海外 / 港澳台','暂不透露']),
     q('currentSituation',1,early?'最近你的学习状态更接近哪一种？':senior?'最近你的毕业 / 工作状态更接近哪一种？':'最近你的课程与实践状态更接近哪一种？','先确认你手上已有的现实基础。',stage==='graduate'?['已有工作，想兼顾收入尝试转向','目前求职中，还没有确定机会','已有 offer，在比较不同机会','正在准备升学或考试','暂时说不清']:early?['课程为主，还在尝试不同方向','已有比较喜欢的课程或项目','课程压力较大，暂时没有额外实践','正在找实习 / 实践机会','暂时说不清']:['已有课程或项目成果，缺少行业经历','已有实习 / 兼职，希望判断是否继续','正在准备升学或考试','正在求职 / 已有 offer 需要取舍','暂时说不清']),
     q('experienceType',1,'你最常从哪类事情中获得“愿意再试一次”的感觉？','不要求你已经有正式项目，日常活动也算。',['课程作业或解题','做出一个作品 / 产品','阅读、研究或理解原理','和人沟通、组织或协作','动手操作、实验或修理','目前还没有明显线索']),
-    q('process',1,a.experienceType==='目前还没有明显线索'?'先试一次的话，哪类过程让你更好奇？':`在${a.experienceType||'这些事情'}里，你最愿意重复哪种过程？`,'愿意继续、已经擅长和成绩好是不同的事。',['把模糊需求整理成清楚方案','写代码或搭建能运行的东西','查资料并解释一个复杂问题','做视觉表达或内容呈现','和不同的人协调完成一件事','动手试验并观察结果','还说不清，想先试两种任务']),
+    q('process',1,selectedValues(a.experienceType).includes('目前还没有明显线索')?'先试一次的话，哪类过程让你更好奇？':`在${a.experienceType||'这些事情'}里，你最愿意重复哪种过程？`,'愿意继续、已经擅长和成绩好是不同的事。',['把模糊需求整理成清楚方案','写代码或搭建能运行的东西','查资料并解释一个复杂问题','做视觉表达或内容呈现','和不同的人协调完成一件事','动手试验并观察结果','还说不清，想先试两种任务']),
     q('familyContext',2,'家人或重要的人，目前对你的下一步更接近哪种期待？','这是背景信息，系统不会自动把家人意见当成你的硬约束。',['希望稳定、留在熟悉的地方','支持我去尝试，但担心风险','更看重尽快有收入','主要由我自己决定','还没有认真讨论']),
     q('mobility',2,senior?`如果下一步离开${displayCity(a.city)}，你目前的态度是？`:'探索课程或专业时，你对地域变化的态度是？','偏好与不能改变的条件分开记录。',['希望留在目前城市，但可以商量','可以考虑省内其他城市','可以考虑外地一段时间','愿意去更大的城市尝试','尚未确定']),
-    q('boundary',2,'当前有哪些选择，是你确认暂时不能做的？','只记录已确认的硬边界，家庭期待和个人偏好另行考虑。',early?['暂时不能增加付费课程或远距离出行','暂时不能转专业或更换学校','暂时不能搬去外地','暂时没有确认的硬限制','条件尚未核实']:['暂时不能搬去外地','需要保持收入，不能脱产准备','暂时无法连续参加实习或全职实践','暂时没有确认的硬限制','条件尚未核实']),
+    q('boundary',2,'当前有哪些选择，是你确认暂时不能做的？','只记录已确认的硬边界，家庭期待和个人偏好另行考虑。',early?['暂时不能增加付费课程或远距离出行','暂时不能转专业或更换学校','暂时不能搬去外地','暂时没有确认的硬限制','条件尚未核实']:['暂时不能搬去外地','有照护责任，暂时确实不能离开','需要保持收入，不能脱产准备','暂时无法连续参加实习或全职实践','暂时没有确认的硬限制','条件尚未核实']),
     ...(early?[q('support',2,'探索时，你目前能获得怎样的支持？','不需要透露家庭资产；这会影响任务的费用和资源需求。',['可用学校资源，优先免费体验','可以承担少量学习或材料费用','费用和时间都需要先与家人商量','希望先完全依靠免费资源','支持情况尚未核实'])]:[q('income',2,'毕业 / 转向期间，你对收入的要求是？','不需要具体资产数字；这会影响是否能脱产准备。',['需要保持或尽快获得收入','可以承担短期准备','已有稳定收入，探索需要兼顾工作','尚未核实'])]),
     q('hours',2,'近期，一次探索任务你能稳定投入多久？','第一行动会控制在这个时间内，不要求挤占正常生活。',['约 1 小时','约 2 小时','约 5 小时','约 10 小时'],[1,2,5,10]),
     q('priority',3,'如果这次只解决一件事，你更想先看清什么？','选一个当前最有价值的判断。',early?['找到愿意重复的任务','比较学习与实践方向','了解适合自己的专业范围','先完成一个低成本尝试']:['找到愿意重复的任务','比较学习与实践方向','判断升学与就业取舍','先完成一个低成本尝试']),
@@ -38,24 +38,55 @@ export function interviewQuestions(a,deep=false){
     if(/求职|offer/.test(a.currentSituation||''))insertAfter(questions,'internship',q('offer',1,'你手上的工作机会到哪一步了？','只有确定的机会才作为可行选项；不会假定投递就能录用。',['暂无确定机会','有面试或意向，还未确认','已有明确 offer，可比较条件','已有工作，想判断是否调整','暂不透露']));
     if(/升学|深造|考试/.test((a.concern||'')+(a.currentSituation||'')))insertAfter(questions,/求职|offer/.test(a.currentSituation||'')?'offer':'internship',q('research',1,'你对深造的想法，主要来自哪里？','实际研究体验与学历、就业压力分开看。',['体验过研究过程，愿意继续','接触过论文或课题，还没确定','主要担心就业或学历门槛','主要来自老师或家人的建议','还没有接触过研究过程']));
   }
-  if(a.familyContext==='希望稳定、留在熟悉的地方'&&['可以考虑外地一段时间','愿意去更大的城市尝试'].includes(a.mobility))insertAfter(questions,'mobility',q('familyBinding',2,'你愿意外出，而家人倾向留本地：目前沟通到哪一步？','这个分歧会影响路线次序，但不替你做决定。',['已经沟通过，可以尝试一段时间','尚未沟通，需要先明确顾虑','有照护责任，暂时确实不能离开','只是期待不同，没有实际限制']));
+  if(selectedValues(a.familyContext).includes('希望稳定、留在熟悉的地方')&&['可以考虑外地一段时间','愿意去更大的城市尝试'].includes(a.mobility))insertAfter(questions,'mobility',q('familyBinding',2,'你愿意外出，而家人倾向留本地：目前沟通到哪一步？','这个分歧会影响路线次序，但不替你做决定。',['已经沟通过，可以尝试一段时间','尚未沟通，需要先明确顾虑','有照护责任，暂时确实不能离开','只是期待不同，没有实际限制']));
   if(a.income==='可以承担短期准备')insertAfter(questions,'income',q('runway',2,'这段准备窗口，目前确认有多长？','只问时间范围，避免推荐超出实际准备成本的路线。',['约 1–3 个月','约 3–6 个月','半年以上','时间仍需核实']));
   if(deep){questions.push(q('academic',4,'目前的学业或技能基础更接近哪种情况？','基础困难与兴趣不合分开处理。',['基础较稳，已有独立成果','基础一般，需要补关键知识','有明显短板，优先解决学业困难','尚未形成可判断的成果','暂时不想补充']));questions.push(q('resources',4,'接下来最可能用上的支持是什么？','选择已有资源，不把想得到的资源当成已拥有。',['老师或学长可以指导','同伴或社团可以一起实践','已有实习或工作环境','可以使用公开课程与学校资料','还没有确定支持']));}
+  for(const question of questions){
+    const spec=multiSpecs[question.id];if(spec){question.type='multi';question.max=spec.max||question.options.length;question.exclusive=question.options.filter(o=>/尚未确定|说不清|没有明显线索|没有确认的硬限制|条件尚未核实|还没有确定支持/.test(o));}
+    if(question.id==='field')question.hint='可选最多3项，跨领域也可以；尚未确定与具体方向分开选择。';
+    if(question.id==='experienceType')question.title='哪些事情会让你愿意再试一次？';
+    if(question.id==='process')question.title='哪些过程让你愿意继续投入，或想先体验？';
+    if(question.id==='familyContext')question.title='家人或重要的人，对你有哪些期待？';
+  }
+  if(a.interviewVersion===3){
+    const order=['stage','concern','field','currentSituation','boundary',early?'support':'income','hours'];
+    const copy={stage:['你现在在哪个阶段？','选最接近你的一项。'],concern:['你最想解决什么问题？','先选一件最重要的事。'],field:['你想了解哪些方向？','可以多选，也可以选还没想好。'],currentSituation:['你现在的情况是？','选最接近你的一项。'],boundary:['现在有哪些事做不了？','可以多选，只选确实不能做的。'],support:['这次尝试，费用怎么安排？','不需要填写具体金额。'],income:['现在需要兼顾收入吗？','这会影响建议的投入和节奏。'],hours:['这次能拿出多少时间？','我们会把第一步安排在这个时间内。']};
+    const names={'计算机与信息':'计算机与技术','尚未确定':'还没想好','暂时说不清':'还说不清','已有课程或项目成果，缺少行业经历':'做过课程作业或项目，还没有实习','已有实习 / 兼职，希望判断是否继续':'做过实习或兼职，想想下一步','正在求职 / 已有 offer 需要取舍':'正在找工作，或有机会要选','暂时没有确认的硬限制':'暂时没有限制','条件尚未核实':'还不确定','有照护责任，暂时确实不能离开':'需要照顾家人，暂时不能离开','需要保持收入，不能脱产准备':'需要收入，不能全职备考','暂时无法连续参加实习或全职实践':'暂时不能连续实习或全职工作','需要保持或尽快获得收入':'需要尽快有收入','可以承担短期准备':'可以先准备一段时间','已有稳定收入，探索需要兼顾工作':'有工作，需要边工作边尝试','尚未核实':'还不确定','可用学校资源，优先免费体验':'先用学校或免费的资源','支持情况尚未核实':'还不确定'};
+    return order.map(id=>{const item=questions.find(q=>q.id===id);return {...item,options:item.options.map(o=>names[o]||o),title:copy[id][0],hint:copy[id][1]};});
+  }
+  if(a.interviewVersion===2&&!deep){const core=new Set(['stage','concern','education','field','city','currentSituation','process','boundary','support','income','hours','priority']);return questions.filter(q=>core.has(q.id));}
   return questions;
 }
 function insertAfter(questions,id,question){questions.splice(questions.findIndex(q=>q.id===id)+1,0,question);}
 function displayCity(city){return ['西安','成都'].includes(city)?city:'目前的城市';}
-export const answerLabels={stage:'人生阶段',concern:'当前困扰',education:'学历与学习状态',field:'专业与领域',city:'当前城市',schoolPlan:'升学准备',currentSituation:'当前状态',internship:'行业实践',offer:'已有机会',research:'深造动机',experienceType:'投入经历类型',task:'愿意先做的任务',process:'愿意重复的过程',familyContext:'家庭期待',mobility:'地域偏好',familyBinding:'家庭沟通与责任',boundary:'已确认硬边界',support:'资源与费用支持',income:'收入边界',runway:'准备窗口',hours:'单次可投入时间',priority:'本次目标',decisionStyle:'取舍偏好',academic:'学业与技能基础',resources:'可用支持',experience:'可选经历补充',correction:'我的纠正',followup:'关键追问回答',feedback:'实践反馈'};
+export function contextQuestions(a){
+ const ids=new Set(['education','city','experienceType','process','academic','resources']);
+ return interviewQuestions({...a,interviewVersion:1},true).filter(q=>ids.has(q.id)).map(q=>({...q,...(q.id==='city'?{title:'你目前在哪座城市？',hint:'不用填写学校或详细地址。'}:{}),optional:true}));
+}
+export const answerLabels={stage:'人生阶段',concern:'当前困扰',education:'学历与学习状态',field:'专业与领域',city:'当前城市',schoolPlan:'升学准备',currentSituation:'当前状态',internship:'行业实践',offer:'已有机会',research:'深造动机',experienceType:'投入经历类型',task:'愿意先做的任务',process:'愿意重复的过程',familyContext:'家庭期待',mobility:'地域偏好',familyBinding:'家庭沟通与责任',boundary:'现实限制',support:'资源与费用支持',income:'收入边界',runway:'准备窗口',hours:'单次可投入时间',priority:'本次目标',decisionStyle:'取舍偏好',academic:'学业与技能基础',resources:'可用支持',supplement:'我补充的情况',experience:'可选经历补充',correction:'我的纠正',followup:'关键追问回答',feedback:'实践反馈'};
 export function composeExperience(a){
-  const parts=Object.entries(answerLabels).filter(([k])=>!['stage','concern','experience','correction','followup','feedback'].includes(k)&&a[k]!==undefined&&a[k]!=='').map(([k,label])=>`${label}：${a[k]}`);
+  const parts=Object.entries(answerLabels).filter(([k])=>!['stage','concern','experience','correction','followup','feedback'].includes(k)&&a[k]!==undefined&&a[k]!=='').map(([k,label])=>`${label}：${answerText(a[k])}`);
   return parts.join('；')+(a.experience?`。补充经历：${a.experience}`:'。目前没有额外文字经历，以上选择是用户主动确认的背景线索。');
 }
-export function interviewReadiness(a){
-  const required=interviewQuestions(a).filter(q=>!q.optional),missing=required.filter(q=>!(q.values||q.options).some(v=>String(v)===String(a[q.id]))).map(q=>q.id);
-  return {ready:missing.length===0,missing};
+export const multiSpecs={field:{max:3},experienceType:{max:3},process:{max:3},boundary:{},familyContext:{max:2},resources:{max:3}};
+export const selectedValues=value=>value===undefined?[]:Array.isArray(value)?value:[value];
+export const answerText=value=>Array.isArray(value)?value.join('；'):String(value??'');
+export function validQuestionAnswer(question,value){
+ const values=question.values||question.options||[];
+ if(question.type!=='multi')return values.some(v=>String(v)===String(value));
+ const items=selectedValues(value);return items.length>0&&items.length<=(question.max||values.length)&&new Set(items).size===items.length&&items.every(v=>values.includes(v))&&(!items.some(v=>question.exclusive?.includes(v))||items.length===1);
 }
-export function sampleChoiceInput(stage='senior'){
-  let a={stage,concern:stageOf(stage).concerns[0],interviewVersion:1};
+export function toggleQuestionAnswer(question,old,value){
+ const current=selectedValues(old);if(current.includes(value))return current.filter(v=>v!==value);
+ if(question.exclusive?.includes(value))return [value];
+ const next=current.filter(v=>!question.exclusive?.includes(v));if(next.length>=(question.max||question.options.length))throw Error('最多选择'+question.max+'项，请先取消一项。');return [...next,value];
+}
+export function interviewReadiness(a){
+ const required=interviewQuestions(a).filter(q=>!q.optional),missing=required.filter(q=>!validQuestionAnswer(q,a[q.id])).map(q=>q.id);
+ return {ready:missing.length===0,missing};
+}
+export function sampleChoiceInput(stage='senior',version=1){
+  let a={stage,concern:stageOf(stage).concerns[0],interviewVersion:version};
   for(let i=0;i<30;i++){
     const missing=interviewQuestions(a).find(q=>!q.optional&&!Object.hasOwn(a,q.id));
     if(!missing)break;
@@ -68,7 +99,7 @@ export function updateInterviewAnswer(a,question,value){
   if(question.id==='stage'&&a.stage!==value){
     for(const key of ['concern','education','currentSituation','schoolPlan','priority'])delete next[key];
   }
-  for(const q of interviewQuestions(next,true))if(next[q.id]!==undefined&&!(q.values||q.options).some(v=>String(v)===String(next[q.id])))delete next[q.id];
+  for(const q of interviewQuestions(next,true))if(next[q.id]!==undefined&&!validQuestionAnswer(q,next[q.id]))delete next[q.id];
   const visible=new Set(interviewQuestions(next,true).map(q=>q.id));
   for(const key of ['schoolPlan','internship','offer','research','support','income','familyBinding','runway'])if(!visible.has(key))delete next[key];
   return next;

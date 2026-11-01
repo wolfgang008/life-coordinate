@@ -1,23 +1,6 @@
-import {icon,button,terrain,notice} from '../components/ui.js';
+import {esc,button,notice} from '../components/ui.js';
+import {studentStory} from '../domain/example.js';
 export function homeView(s,config){
-  return `<section class="hero">
-    <div class="hero-copy">
-      <p class="intro-label"><span class="live-dot"></span>人生坐标 · 从认识自己开始</p>
-      <h1>先看见自己的处境，<br>再找到下一步。</h1>
-      <p class="hero-description">用几道有价值的选择题，告诉我们你现在是谁、<br>身处哪里、在意什么，以及哪些路真的走得通。</p>
-      <div class="actions">${button('开始认识自己','start')}<button class="text-button" data-command="example">看一个完整案例 ${icon('book')}</button></div>
-      <p class="fine">${icon('shield')}不用注册，也不用先想好答案；每一步都可以回去修改</p>
-      ${s.answers.interviewVersion===1||s.answers.stage?'<button class="resume" data-command="resume">继续上次的探索 '+icon('arrow')+'</button>':''}
-    </div>
-    <div class="hero-atlas" aria-label="从背景选择到方向行动的产品示意">
-      <div class="atlas-caption">你的人生地形册 <span>从线索到行动</span></div>
-      <svg class="hero-connections" viewBox="0 0 600 500" aria-hidden="true"><path d="M85 360C160 300 250 340 292 230S410 200 488 130"/><path d="M292 230C315 320 418 380 468 390"/><circle cx="85" cy="360" r="6"/></svg>
-      <div class="land land-one">${terrain('sage')}<div class="land-caption"><span>先确认你的处境</span><strong>你现在站在哪里</strong></div></div>
-      <div class="land land-two">${terrain('mint')}<div class="land-caption"><span>再理解你的偏好</span><strong>哪些过程值得继续</strong></div></div>
-      <div class="land land-three">${terrain('gold')}<div class="land-caption"><span>最后走出一小步</span><strong>让体验帮你判断</strong></div></div>
-      <span class="origin">从现在开始</span><span class="map-key">${icon('branch')}每条路，都可以重新选择</span>
-    </div>
-  </section>
-  ${config.checked&&!config.ready?notice('AI 分析暂时无法连接。你仍然可以开始回答，内容会自动保存，稍后再继续分析。'):''}
-  <section class="promise"><div>${icon('edit')}<h3>先听懂你，再给建议</h3><p>选择会组成你的现实背景，AI 只在信息足够时开始理解。</p></div><div>${icon('branch')}<h3>把可能和代价放在一起</h3><p>家庭、城市、时间和收入边界，都会进入方向比较。</p></div><div>${icon('flag')}<h3>从一件小事验证方向</h3><p>最后留下一个这周就能开始、做完能得到反馈的行动。</p></div></section>`;
+ const hasDraft=!!s.answers.stage||!!s.answers.interviewVersion,hasRecord=!!s.activeId;
+ return `<section class="hero simple-home"><div class="hero-copy"><p class="intro-label">用个性化选择题，理清学业与职业方向</p><h1>下一步怎么选？<br>先从了解你开始。</h1><p class="hero-description">不用先想好怎么提问。通过一系列选择题，梳理你的背景、经历和现实条件；AI 根据回答继续追问，再给适合你的建议。</p><ul class="home-highlights"><li>先选基本情况，问题会随你的回答调整</li><li>答完先核对，有遗漏再按需补充</li><li>结合当前处境，比较方向、代价与下一步</li></ul><div class="actions">${button('开始选择题探索','start')}</div><p class="fine">以选择题为主 · 不用写长篇自我介绍 · 不用注册</p><p class="fine">先了解你，再分析怎么选。文字补充可以跳过。</p>${hasDraft||hasRecord?`<div class="resume-line">上次的探索还在。${button('继续上次','resume',true)}</div>`:''}</div><article class="example-card" aria-labelledby="example-title"><div class="example-heading"><span class="tag">看看选择题怎样了解一个人</span><span class="example-person">计算机专业 · 大二</span></div><h2 id="example-title">刷算法，还是做项目？</h2><p class="example-story">${esc(studentStory)}</p><div class="example-preview"><p class="fine">个性化追问示意 · 实际问题由 AI 根据回答生成</p><h3 class="example-question">参加比赛时，你更投入哪一部分？</h3><ul class="example-choices"><li>想出解法，把题做出来</li><li>写出一个能运行的功能</li><li>和队友分工，把事情推进</li><li>还说不清，想再试试</li></ul><p class="example-next">同样是计算机学生，愿意投入的过程可能不同。先了解这些差别，再结合时间和限制比较选择。</p></div><button type="button" class="button secondary" data-command="example">用这个案例体验选择题</button><p class="fine">从背景选择开始，经历个性化追问、核对补充与实际分析。</p></article></section>${config.checked&&!config.ready?notice('AI 暂时不可用。你仍可以先回答选择题，稍后继续分析；回答会保留。'):''}<section class="home-process" aria-label="探索流程"><ol><li><span>1</span><div><h2>选择题逐步了解你</h2><p>先选背景，再回答和你有关的个性化问题。</p></div></li><li><span>2</span><div><h2>核对情况，按需补充</h2><p>把经历、偏好和现实限制放在一起看，不用从头写。</p></div></li><li><span>3</span><div><h2>获得个性化建议</h2><p>看清取舍，带走能做的一步，再用实践反馈调整。</p></div></li></ol></section>`;
 }

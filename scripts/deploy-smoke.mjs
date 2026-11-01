@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {sampleAnswers,stages} from '../public/core.js';
 import {guardResult} from '../src/ai.mjs';
 
+if(!process.argv.includes('--production-approved'))throw Error('该脚本会写入生产测试会话，需要单独授权并传 --production-approved。');
 const base='https://life-coordinate.wolfgang13450.workers.dev';
 const reportName=process.argv.find(arg=>arg.startsWith('--report='))?.slice(9)||'cloudflare-deploy-smoke-20261002.json';
 if(!/^[a-z0-9-]+\.json$/.test(reportName))throw Error('核验报告文件名不正确。');
@@ -46,7 +47,7 @@ try{
   const result=events.find(e=>e.type==='result'),error=events.find(e=>e.type==='error');
   report.live={status:result?'passed':'failed',elapsedMs:Date.now()-started,answers,events};
   assert.ok(result,error?.message||'未返回分析结果');assert.equal(result.plan.mode,'live');assert.equal(result.planId,null);assert.equal(guardResult(result.plan,answers).routes.length,3);assert.ok(result.plan.committee.length>=2);assert.ok(result.plan.coreConflict);
-  passed('真实网关到生产 Worker 的 AI 完整分析',{elapsedMs:report.live.elapsedMs,modelCount:result.plan.committee.length,degraded:result.plan.degraded,usage:result.plan.usage});
+  passed('官方模型到生产 Worker 的 AI 完整分析',{elapsedMs:report.live.elapsedMs,modelCount:result.plan.committee.length,degraded:result.plan.degraded,usage:result.plan.usage});
  }
  report.passed=true;
 }catch(error){report.passed=false;report.error=error.message;console.error(error.message);process.exitCode=1;}

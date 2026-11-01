@@ -92,23 +92,23 @@ try {
   await capture('home.jpg');
 
   await evaluate(`(async () => {
-    const data = await fetch('/content/senior-example.json').then(response => response.json());
-    const recordId = 'readme-example';
+    const {studentAnswers}=await import('/domain/example.js'); const {sampleChoiceInput}=await import('/domain/stages.js');const {localPreview}=await import('/domain/rules.js');const answers={...sampleChoiceInput('early',3),...studentAnswers()};const data={answers,profile:null,plan:localPreview(answers)};
+    const recordId = 'readme-rules-preview';
     const work = Object.fromEntries(data.plan.routes.map(route => [route.id, {completed: [], notes: {continue: '', stuck: '', again: ''}}]));
     const state = {
       version: 5, interviewLayout: 2, storageRevision: 1,
       answers: data.answers, index: 0, interviewDeep: false,
       profile: data.profile, nextQuestion: null,
-      confirmations: Object.fromEntries(data.profile.interestHypotheses.map(item => [item.id, 'accepted'])),
-      constraints: Object.fromEntries(data.profile.constraints.map(item => [item.id, true])),
+      confirmations: {},
+      constraints: {},
       followupDraft: '', correctionDraft: '',
-      records: [{id: recordId, plan: data.plan, profile: data.profile, answers: data.answers, created: '2026-10-03T08:00:00.000Z', example: true, parentId: null, stale: false, work}],
-      activeId: recordId, sampleBackup: null, example: true,
+      records: [{id: recordId, plan: data.plan, profile: data.profile, answers: data.answers, created: '2026-10-03T08:00:00.000Z', example: false, parentId: null, stale: false, work}],
+      activeId: recordId, sampleBackup: null, example: false,
       homeStage: 'school', homeConcern: '', screen: 'profile',
       selected: data.plan.primaryRouteId, scenario: ''
     };
     localStorage.setItem('life-coordinate-atlas-v5', JSON.stringify(state));
-    location.hash = '#/profile';
+    location.hash = '#/interview';
     location.reload();
   })()`);
   await ready();

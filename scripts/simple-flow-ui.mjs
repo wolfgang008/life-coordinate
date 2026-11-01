@@ -1,0 +1,57 @@
+// Browser regression against an isolated Worker + in-memory D1 + simulated official API.
+// This script never reads a real key or calls a paid model.
+import http from 'node:http';
+import {adaptiveFixture} from './lib/interview-fixture.mjs';
+import {spawn} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import assert from 'node:assert/strict';
+import {localHarness} from './lib/local-harness.mjs';
+import {profileFixture,directionFixture,modelReply} from './lib/ai-fixtures.mjs';
+const root=new URL('../',import.meta.url),output=new URL('qa/live/simple-flow-ui/',root),profileDir=new URL('.tmp/chrome-'+crypto.randomUUID()+'/',root);await mkdir(output,{recursive:true});await mkdir(profileDir,{recursive:true});
+const calls=[];const pause=ms=>new Promise(r=>setTimeout(r,ms)),nativeFetch=globalThis.fetch;let mode='stall',h=await localHarness({API_KEY:'mock-only'}),browser,socket;
+globalThis.fetch=async(u,options)=>{
+ if(u!=='https://api.deepseek.com/chat/completions')return nativeFetch(u,options);
+ if(mode==='balance')return new Response('',{status:402});
+ if(mode==='stall')return new Promise((resolve,reject)=>{if(options.signal.aborted){reject(Error('canceled'));return;}options.signal.addEventListener('abort',()=>reject(Error('canceled')),{once:true});});
+ const b=JSON.parse(options.body),input=JSON.parse(b.messages[1].content);calls.push({model:b.model,task:input.task|| (input.answerSourceIds?'profile':input.independent_opinions?'decision':'independent')});
+ if(input.task==='adaptive_interview')return modelReply(b.model,adaptiveFixture(input.answers));
+ if(input.answerSourceIds){const sourceId=input.answers.ai_process?'ai_process':'experience',value=input.answers[sourceId],p=profileFixture({...input.answers,experience:value});p.interestHypotheses[0].sourceIds=[sourceId];p.interestHypotheses[0].quotes=[value];p.insight.sourceIds=[sourceId];if(input.answers.feedback&&!input.answers.followup)p.nextQuestion={question:'哪一部分愿意继续？',purpose:'区分反馈中的兴趣线索',affects:'第一行动',options:['整理线索','做出成果','目前还不知道']};return modelReply(b.model,p);}
+ const sourceId=input.answers.ai_process?'ai_process':'experience',d=directionFixture();d.coreInsight.personalSourceIds=[sourceId];d.routes[0].personalSourceIds=[sourceId];return modelReply(b.model,d);
+};
+const server=http.createServer(async(req,res)=>{try{
+ const parts=[];for await(const c of req)parts.push(c);const raw=Buffer.concat(parts).toString(),response=await h.request(req.url,raw?JSON.parse(raw):undefined);res.writeHead(response.status,Object.fromEntries(response.headers));
+ const reader=response.body?.getReader();if(reader){res.on('close',()=>{if(!res.writableEnded)reader.cancel().catch(()=>{});});for(;;){const r=await reader.read();if(r.done||res.destroyed)break;res.write(Buffer.from(r.value));}}res.end();
+ }catch{if(!res.headersSent)res.writeHead(500);res.end('Test service failed');}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port,port=9441,report={checkedAt:new Date().toISOString(),simulated:true,paidCalls:0,viewports:[]};
+try{
+ browser=spawn(process.env.CHROME_PATH||'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',['--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--remote-debugging-port='+port,'--user-data-dir='+fileURLToPath(profileDir),'about:blank'],{stdio:'ignore',windowsHide:true});
+ let pages;for(let i=0;i<60;i++){try{pages=await (await nativeFetch('http://127.0.0.1:'+port+'/json/list',{signal:AbortSignal.timeout(1000)})).json();break;}catch{await pause(100);}}assert(pages);
+ socket=new WebSocket(pages.find(p=>p.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{socket.addEventListener('open',r,{once:true});socket.addEventListener('error',j,{once:true});});
+ let next=0;const pending=new Map(),errors=[];socket.addEventListener('message',e=>{const m=JSON.parse(e.data);if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails.text);if(m.id&&pending.has(m.id)){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(m.error.message)):p.resolve(m.result);}});
+ const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++next,timer=setTimeout(()=>{pending.delete(id);reject(Error('Browser command timeout: '+method));},5000);pending.set(id,{resolve:r=>{clearTimeout(timer);resolve(r);},reject:e=>{clearTimeout(timer);reject(e);}});socket.send(JSON.stringify({id,method,params}));});
+ async function evaluate(expression){const r=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw Error(r.exceptionDetails.exception?.description||r.exceptionDetails.text);return r.result.value;}
+ async function waitFor(expression){for(let i=0;i<100;i++){if(await evaluate(expression))return;await pause(50);}throw Error('UI timeout: '+expression);}
+ async function click(selector){await waitFor('!!document.querySelector('+JSON.stringify(selector)+')');await evaluate(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(e.disabled)throw Error('Disabled control');e.scrollIntoView({block:'center',behavior:'instant'});e.click();})()`);await pause(100);}
+ async function capture(width,name){await evaluate('window.scrollTo(0,0)');await pause(100);const img=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(new URL(width+'-'+name+'.png',output),Buffer.from(img.data,'base64'));assert(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'horizontal overflow '+name);}
+ async function confirm(){for(const selector of ['[data-confirm][data-value="accepted"]','[data-constraint]']){const count=await evaluate('document.querySelectorAll('+JSON.stringify(selector)+').length');for(let i=0;i<count;i++)await evaluate(`document.querySelectorAll(${JSON.stringify(selector)})[${i}].click()`);}await click('[data-command="plan"]');}
+ await call('Page.enable');await call('Runtime.enable');
+ for(const [width,height] of [[1440,900],[1366,768],[375,812]]){
+  if(report.viewports.length){await h.close();h=await localHarness({API_KEY:'mock-only'});}mode='stall';const initialCalls=calls.length;
+  await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});await call('Page.navigate',{url:base});await waitFor('!!document.querySelector("[data-command=start]")');await evaluate('localStorage.clear();location.reload()');await pause(150);await click('[data-command="start"]');
+  for(let i=0;i<4;i++){await waitFor('!!document.querySelector("input[name=answer]")');await evaluate('document.querySelector("input[name=answer]").click()');await click('button[form=interview-form]');}
+  await waitFor('!!document.querySelector("[data-command=consent-questions]")');assert.equal(calls.length,initialCalls);await click('[data-command="consent-questions"]');await waitFor('!!document.querySelector("[data-command=cancel-questions]")');await click('[data-command="cancel-questions"]');await pause(100);assert.equal(h.db.sql.prepare("SELECT COUNT(*) n FROM atlas_jobs WHERE status='running'").get().n,0);
+  mode='balance';await click('[data-command="generate-questions"]');await waitFor('document.querySelector("#main").textContent.includes("服务额度暂时不足")');mode='success';await click('[data-command="generate-questions"]');await waitFor('!!document.querySelector("[data-question-id=ai_process]")');
+  await evaluate('document.querySelectorAll("input[name=answer]")[0].click();document.querySelectorAll("input[name=answer]")[1].click()');const count=calls.length;await call('Page.reload');await pause(150);await waitFor('!!document.querySelector("[data-question-id=ai_process]")');assert.equal(calls.length,count);assert.equal(await evaluate('document.querySelectorAll("input[name=answer]:checked").length'),2);
+  await click('button[form=interview-form]');await click('input[value=unknown]');await click('button[form=interview-form]');
+  for(let i=0;i<3;i++){await waitFor('!!document.querySelector("input[name=answer]")');await evaluate('document.querySelector("input[name=answer]").click()');await click('button[form=interview-form]');}
+  await waitFor('!!document.querySelector("[data-command=finish-interview]")');await click('[data-command=finish-interview]');await waitFor('!!document.querySelector("[data-command=consent-run]")');await click('[data-command="consent-run"]');await waitFor('location.hash==="#/result"');assert(!await evaluate('!!document.querySelector("[data-confirm]")'));assert.equal(await evaluate('JSON.parse(localStorage.getItem("life-coordinate-atlas-v5")).records.length'),1);
+  await click('[data-command="primary-action"]');await waitFor('!!document.querySelector("[data-note]")');assert.equal(await evaluate('document.querySelectorAll("[data-note]").length'),1);await evaluate(`(()=>{const e=document.querySelector('[data-note="continue"]');e.value='整理内容有意思，查资料容易走神。';e.dispatchEvent(new Event('input',{bubbles:true}));})()`);await click('[data-command="review"]');await waitFor('location.hash==="#/result"');assert.equal(await evaluate('JSON.parse(localStorage.getItem("life-coordinate-atlas-v5")).records.length'),2);assert(await evaluate('document.querySelector("#main").textContent.includes("建议已更新")'));assert.equal(h.db.sql.prepare('SELECT COUNT(*) n FROM personal_models WHERE confirmed=1').get().n,0);
+  await click('[data-command="primary-action"]');await click('.brand');await waitFor('!!document.querySelector("[data-command=resume]")');await call('Page.reload');await pause(150);await click('[data-command="resume"]');await waitFor('location.hash==="#/action"');assert(await evaluate('!!document.querySelector("[data-note]")'));
+  if(width===1440){
+   const expired=new Date(Date.now()-25*3600000).toISOString();await evaluate(`(()=>{const key='life-coordinate-atlas-v5',s=JSON.parse(localStorage.getItem(key));s.profile.modelProvenance.generatedAt=${JSON.stringify(expired)};s.records[0].profile.modelProvenance.generatedAt=${JSON.stringify(expired)};localStorage.setItem(key,JSON.stringify(s));location.reload();})()`);await pause(150);await waitFor('!!document.querySelector("[data-note]")');h.db.sql.prepare('UPDATE atlas_jobs SET expires_at=?').run(Date.now()-1);h.db.sql.prepare('UPDATE personal_models SET expires_at=?').run(Date.now()-1);await evaluate(`(()=>{const e=document.querySelector('[data-note="continue"]');e.value='隔天做完了，更喜欢整理信息。';e.dispatchEvent(new Event('input',{bubbles:true}));})()`);await click('[data-command="review"]');await waitFor('!!document.querySelector("[data-command=consent-review]")');await click('[data-command="consent-review"]');await waitFor('location.hash==="#/result"');assert.equal(await evaluate('JSON.parse(localStorage.getItem("life-coordinate-atlas-v5")).records.length'),3);report.expiredReviewRecovered=true;
+  }
+  report.viewports.push({width,height,passed:true,aiAfterFourQuestions:true,totalQuestions:9,noConfirmationGate:true,singleFeedback:true,directReview:true,resumeAction:true,refreshWithoutRecall:true,modelCalls:calls.length-initialCalls});console.log(JSON.stringify(report.viewports.at(-1)));
+ }assert.deepEqual(errors,[]);report.passed=true;
+}catch(e){report.passed=false;report.error=e.message;console.error(e.message);process.exitCode=1;}
+finally{socket?.close();browser?.kill();globalThis.fetch=nativeFetch;server.closeAllConnections();server.close();await h.close();await writeFile(new URL('summary.json',output),JSON.stringify(report,null,2));}

@@ -1,9 +1,10 @@
+if(process.env.ENABLE_LIVE_AI!=='1')throw Error('真实付费验证需显式设置 ENABLE_LIVE_AI=1。');
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {understand,directions} from '../src/profiling/engine.mjs';
 import {sampleInput} from '../public/domain/stages.js';
-const privateConfig=JSON.parse((await readFile(new URL('../.local/relay.json',import.meta.url),'utf8')).replace(/^\uFEFF/,''));
-const env={API_KEY:privateConfig.apiKey,API_BASE:privateConfig.apiBase,PROFILE_MODEL:'gpt-5.4-mini'};
-const root=new URL('../',import.meta.url);await mkdir(new URL('qa/live/',root),{recursive:true});await mkdir(new URL('public/content/',root),{recursive:true});
+const privateConfig=JSON.parse((await readFile(new URL('../.local/deepseek.json',import.meta.url),'utf8')).replace(/^\uFEFF/,''));
+const env={API_KEY:privateConfig.apiKey,API_BASE:privateConfig.apiBase,PROFILE_MODEL:'deepseek-flash'};
+const root=new URL('../',import.meta.url);await mkdir(new URL('qa/live/',root),{recursive:true});
 const key=process.argv[2]||'senior';
 const base=sampleInput();
 const cases={
@@ -29,7 +30,6 @@ try{
  output.steps.push({task:'plan',status:'passed',metrics:plan.metrics,routeTitles:plan.routes.map(r=>r.title),profileRevision:plan.profileRevision});
  const artifact={answers,profile,plan,fictitious:true,notice:'开发验证使用虚构人物。所有输出经本次真实模型调用及结构守卫。'};
  await writeFile(new URL('qa/live/'+key+'-result.json',root),JSON.stringify(artifact,null,2));
- if(key==='senior')await writeFile(new URL('public/content/senior-example.json',root),JSON.stringify(artifact));
  console.log(JSON.stringify(output.steps.at(-1)));
 }catch(e){output.steps.push({status:'failed',code:e.code||'validation',message:e.code?e.message:'内容或连接校验失败。'});console.log(JSON.stringify(output.steps.at(-1)));process.exitCode=1;}
 output.durationMs=Date.now()-started;await writeFile(new URL('qa/live/'+key+'-summary.json',root),JSON.stringify(output,null,2));

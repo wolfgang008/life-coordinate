@@ -9,3 +9,4 @@ qa/live-result.json
 qa/当前状态与整理记录.md
 .tmp/
 *.log
+wrangler.toml
