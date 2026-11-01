@@ -1,0 +1,210 @@
+{
+  "url": "https://life.wolfx.top",
+  "checkedAt": "2026-11-01T04:59:26.325Z",
+  "mode": "read-only",
+  "checks": [
+    {
+      "name": "AI configuration and D1 binding",
+      "passed": true
+    },
+    {
+      "name": "Homepage matches current build",
+      "passed": true
+    },
+    {
+      "name": "All recursive static assets match",
+      "count": 28,
+      "passed": true
+    }
+  ],
+  "config": {
+    "ready": true,
+    "database": true,
+    "providers": [
+      {
+        "provider": "flash",
+        "name": "DeepSeek V4.1 Flash · 探索规划"
+      },
+      {
+        "provider": "pro",
+        "name": "DeepSeek V4 Pro · 可行性规划"
+      }
+    ],
+    "apiHost": "api.deepseek.com",
+    "configurationValid": true,
+    "modelCount": 2,
+    "decision": "Pro · 综合决策",
+    "version": 5
+  },
+  "assets": [
+    {
+      "path": "app/main.js",
+      "sha256": "9fac13061dab28bd5eac93b6f299b8f0d083c4bd432ac79099c5ce6e10c041e9",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "app/requests.js",
+      "sha256": "ed9c51497eaf0cd4484ce8978da1a32cf51f19508c4c264645adb22701b8a5ea",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "app/state.js",
+      "sha256": "e64e9a8ae241763a9700f7f4009ac6f8b4631e990e22f065668c6ec470053842",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "components/ui.js",
+      "sha256": "bb9f02f48545ccd9ff4a18c3c914a16711bea15499c32e95e14b1280444bab5a",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "core.js",
+      "sha256": "46030b47ab0037e5c5c431cd2d115beb6a737e1e10a2b808a9ac3d66bce83db6",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/adaptive.js",
+      "sha256": "98066831b0fb9aa1d20eb6387ff41e73759b6e2deadf54345006f443530f61dd",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/continuation.js",
+      "sha256": "35917ef13e0ab3d1eebb17053c6c3361a11dc7f58f332046fec66c6a916a289f",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/contracts.js",
+      "sha256": "30618313a483995db3bbd7272b2bfa53cea8965f12638f4c7d3aa7c27b724ac4",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/example.js",
+      "sha256": "63fb1618e4b6aea937e627d1e9e85f18866ff1b32f95d6c98419bccad43744c2",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/models.js",
+      "sha256": "13c908c61df606972f7db20936588b7812bf2f1f38450d6a949e2c552247c153",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/rules.js",
+      "sha256": "035272c74be79a0ee7dff61dd2336abb76394df7b762a5499fc046ab59b03d48",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "domain/stages.js",
+      "sha256": "ba0193bce1729c2901bad0901a6792ba6251f43a8d7b8745f2c7219f7027488e",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "evidence.js",
+      "sha256": "d5686da70004cd2552f68a347ed2c0a51b1c07a303c643ca1b73170648929c34",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "5ba559c41b743ba1edd17a485a5f964c892504fcbd39314f5b19f7f13675b342",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "index.html",
+      "sha256": "123a7415ba4712e18995887d56280080079a01fdfbbfee78b930af8efe4339e6",
+      "etagChecked": false,
+      "passed": true
+    },
+    {
+      "path": "planning.js",
+      "sha256": "d9405f9c878c33de71188dd3fa99520d3953f513f964f7e8f0df60c95b857657",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "storage.js",
+      "sha256": "3b25cc7fe8e66a4d9b3491e2e851538ebb2dfe7579287aa21b51610d6d2a3b70",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/base.css",
+      "sha256": "10108fe015f2659e056e2490fe47cf52275620f9bebb71eff030507ab2b96b04",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/interview.css",
+      "sha256": "dc4b2bd2378da16f0ff4d9216068f31ed697c4010497b518c9a6507bca346f12",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/pages.css",
+      "sha256": "b53970ac0a97e2fd39e375caecfac2a003b1ded29103f8227e2b11bb0e946b3e",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "styles/tokens.css",
+      "sha256": "bddce87a6e3ffa7c02641261c52d87290d05c773f28d993543897aab4853119c",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "sync.js",
+      "sha256": "57b757b73ede5e62d7499558146a88941152fa9b7232ef20fb130d49b22fc1e2",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/action.js",
+      "sha256": "dd4730411d38e864a55e3c8043a3c1c84fccd5bec579eddfdd1dce747ed65ff7",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/analysis.js",
+      "sha256": "b864d60c34678d58dad9fe6590c665a0a2b0473ec2d10c84e2cbf4a5bbbc704f",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/home.js",
+      "sha256": "ab5bae098cb934dd3b70f8944f26aa8728fd11946cdd2bcdb09cb9a2e1aef88d",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/interview.js",
+      "sha256": "22d4ee3b4255b0db2ddc7102fa0e95b151680d16d5b791d7e71d0d856d7b3234",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/profile.js",
+      "sha256": "c7c2967f7d0ca1c6ddc871ac7f1e8d8efd7c328cb0b6719646ef4d00384cad16",
+      "etagChecked": true,
+      "passed": true
+    },
+    {
+      "path": "views/result.js",
+      "sha256": "df95e120ba651c0c41f3d19aac4efa31eea2fbd7eb36f2c0590d48853bf374e4",
+      "etagChecked": true,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

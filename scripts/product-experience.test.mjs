@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
-import {studentAnswers,studentStory} from '../public/domain/example.js';
+import {studentAnswers,studentStory,studentExampleChoices,studentAnalysisAnswers} from '../public/domain/example.js';
 import {interviewQuestions,contextQuestions,interviewReadiness,updateInterviewAnswer,sampleChoiceInput} from '../public/domain/stages.js';
 import {homeView} from '../public/views/home.js';
 import {interviewSeed} from '../public/domain/adaptive.js';
 import {baseVersion} from '../src/profiling/interview.mjs';
 import {cleanAnswers,validateTimeBasis,validateProfile,validateDirection} from '../public/domain/contracts.js';
 import {emptyState,draftSnapshot,elapsedSeconds} from '../public/app/state.js';
-import {profileFixture,directionFixture} from './lib/ai-fixtures.mjs';
+import {profileFixture,directionFixture,modelReply} from './lib/ai-fixtures.mjs';
 import {interviewView} from '../public/views/interview.js';
 import {resultView} from '../public/views/result.js';
 import {analysisView} from '../public/views/analysis.js';
@@ -25,6 +25,14 @@ test('原始困惑改变会使个性化问题失效，时间改变仍保留题�
  const a=studentAnswers(),v=await baseVersion(a);assert.notEqual(await baseVersion({...a,experience:'我想换一个专业，但担心跟不上。'}),v);
  assert.equal(await baseVersion({...a,hours:5}),v);assert.equal(updateInterviewAnswer(a,interviewQuestions(a)[0],'junior').experience,studentStory);
 });
+
+test('互动案例的不同选择进入分析，示例条件明确且不伪造个性化题集或能力',async t=>{
+ for(const choice of studentExampleChoices){const a=studentAnalysisAnswers(choice.id);assert.equal(interviewReadiness(a).ready,true);assert.doesNotThrow(()=>cleanAnswers(a));assert.match(a.experience,new RegExp(choice.label));assert.equal(a.hours,2);assert.equal(a.adaptive,undefined);assert.equal(a.education,undefined);assert.equal(a.process,undefined);}
+ assert.throws(()=>studentAnalysisAnswers('not-an-option'));
+ const answers=studentAnalysisAnswers('project');let calls=0;
+ t.mock.method(globalThis,'fetch',async(url,init)=>{calls++;const body=JSON.parse(init.body),input=JSON.parse(body.messages[1].content);assert.equal(input.answers.experience,answers.experience);assert.equal(input.answers.hours,2);assert.equal(input.followupBudget,0);const p=profileFixture({...input.answers,priority:input.answers.concern});return modelReply(body.model,p);});
+ const h=await localHarness({API_KEY:'mock'});try{const response=await h.request('/api/profile/analyze',{answers,quick:true,requestId:crypto.randomUUID(),aiConsent:true});assert.equal(response.status,200);const text=await response.text();assert.match(text,/"profile"/);assert.doesNotMatch(text,/"type":"error"/);assert.equal(calls,1);}finally{await h.close();}
+});
 test('示例备份保留原探索的进度、答案与选择',()=>{
  const s={...emptyState(),answers:{interviewVersion:3,stage:'junior',experience:'我原来的困惑'},index:3,selected:'route_b'};
  const b=draftSnapshot(s);s.answers.experience='示例';assert.equal(b.answers.experience,'我原来的困惑');assert.equal(b.index,3);assert.equal(b.selected,'route_b');
@@ -32,12 +40,12 @@ test('示例备份保留原探索的进度、答案与选择',()=>{
 test('初始阶段尚未选择时不把下一步误标为查看建议',()=>{
  const html=interviewView({...emptyState(),answers:{interviewVersion:3}},{ready:true});assert.match(html,/下一题/);assert.doesNotMatch(html,/button[^>]*>看看建议/);
 });
-test('首页以选择题为主入口，不要求先写困惑；示例展示个性化追问',()=>{
- const html=homeView(emptyState(),{ready:true});assert.match(html,/开始选择题探索/);assert.match(html,/用这个案例体验选择题/);assert.match(html,/个性化追问示意/);assert.doesNotMatch(html,/<textarea|start-story|starting-story/);
+test('首页个人探索保留选择主线，示例选项直接触发案例分析而非重复问卷',()=>{
+ const html=homeView(emptyState(),{ready:true});assert.match(html,/data-command="start"/);assert.match(html,/选择题/);assert.match(html,/虚构人物，真实 AI 分析/);assert.match(html,/本次可投入 2 小时/);assert.equal((html.match(/data-example-choice=/g)||[]).length,4);assert.doesNotMatch(html,/体验选择题|选择题探索|<textarea|start-story|starting-story/);
 });
 test('答题完成后先展示可修改的情况摘要和可选补充，再由用户发起分析',()=>{
  const answers=sampleChoiceInput('early',3),html=interviewView({...emptyState(),answers,index:7},{ready:true});
- assert.match(html,/这些情况符合你吗/);assert.match(html,/data-answer-index="0"/);assert.match(html,/确认并生成建议/);assert.match(html,/data-command="supplement-open"/);assert.match(html,/data-command="context-start"/);assert.doesNotMatch(html,/data-context-question=/);assert.doesNotMatch(html,/textarea[^>]*required/);
+ assert.match(html,/确认当前情况/);assert.match(html,/data-answer-index="0"/);assert.match(html,/data-command="finish-interview"/);assert.match(html,/data-command="supplement-open"/);assert.match(html,/data-command="context-start"/);assert.doesNotMatch(html,/data-context-question=/);assert.doesNotMatch(html,/textarea[^>]*required/);
 });
 test('补充选择题与文字进入分析，但不使已有个性化题集失效；非法补充选项被拒绝',async()=>{
  const a=sampleChoiceInput('early',3),enriched={...a,supplement:'已经报名了两周后的比赛。'};
@@ -59,16 +67,16 @@ test('持续打卡不能伪装成单次第一行动；正常的小成果可以�
 });
 test('示例走基础预览时不会被标成实时 AI 分析',()=>{
  const p=localPreview(studentAnswers()),r={plan:p,sample:true,work:{},id:'sample'};
- const html=resultView({...emptyState(),records:[r]},r);assert.match(html,/基础预览 · 未使用 AI/);assert.doesNotMatch(html,/本次 AI 分析/);assert.match(html,/这份预览怎么来的/);
+ const html=resultView({...emptyState(),records:[r]},r);assert.match(html,/基础预览 · 未使用 AI/);assert.doesNotMatch(html,/本次 AI 分析/);assert.match(html,/基础预览说明/);
 });
 test('模型只改变方向名称的空格时，不声称用户换了方向',()=>{
  const p=localPreview(studentAnswers());p.routes[0].title='Python小功能练习';
  const old={id:'old',plan:structuredClone(p)};old.plan.routes[0].title='Python 小功能练习';
  const r={id:'new',parentId:'old',plan:p};const html=resultView({...emptyState(),records:[r,old]},r);
- assert.match(html,/方向先不变/);assert.doesNotMatch(html,/之前考虑「Python 小功能练习」/);
+ assert.match(html,/方向保持不变/);assert.doesNotMatch(html,/之前考虑「Python 小功能练习」/);
 });
 test('刷新中断的分析给出恢复说明，不冒充仍在运行',()=>{
- const html=analysisView({...emptyState(),busy:false,error:''});assert.match(html,/这次分析还没完成/);assert.match(html,/回答和笔记已保存/);assert.match(html,/data-command="retry"/);
+ const html=analysisView({...emptyState(),busy:false,error:''});assert.match(html,/分析尚未完成/);assert.match(html,/回答和笔记已保存/);assert.match(html,/data-command="retry"/);
 });
 test('刷新后没有开始时间时等待时长归零，时钟回拨也不会出现负数',()=>{
  assert.equal(elapsedSeconds(0,1793467437000),0);assert.equal(elapsedSeconds(1000,4500),3);assert.equal(elapsedSeconds(5000,1000),0);

@@ -41,7 +41,7 @@ test('新访谈从阶段选择开始，选定后当前困扰随阶段变化', ()
   const first=interviewQuestions(answers);
   assert.deepEqual(first.map(q=>q.id),['stage']);
   assert.equal(interviewReadiness(answers).ready,false);
-  assert.match(interviewView({...emptyState(),answers}),/你现在处在哪一段/);
+  assert.match(interviewView({...emptyState(),answers}),/data-question-id="stage"/);
   answers=updateInterviewAnswer(answers,first[0],'graduate');
   const questions=interviewQuestions(answers);
   assert.equal(questions[1].id,'concern');
