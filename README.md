@@ -133,7 +133,7 @@ node scripts/preview.mjs
 ENABLE_LIVE_AI=1 node scripts/preview.mjs
 ```
 
-打开 **http://127.0.0.1:8788**。本地数据库会自动初始化。若只想浏览界面，可省略 `ENABLE_LIVE_AI`；真实 AI 分析仍需配置密钥。
+打开 [本地预览](http://127.0.0.1:8788)。本地数据库会自动初始化。若只想浏览界面，可省略 `ENABLE_LIVE_AI`；真实 AI 分析仍需配置密钥。
 
 使用 Wrangler 开发、设置 `.dev.vars` 和独立部署，见 [开发与部署指南](docs/development.md)。
 
